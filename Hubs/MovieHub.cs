@@ -25,7 +25,7 @@ public class MovieHub(InMemoryDatabase database) : Hub
 
         await Clients
             .Group(connection.Room)
-            .SendAsync("JoinRoomSucceded", result.SuccessMessage);
+            .SendAsync("JoinRoomSucceded", connection.Room);
     }
 
     public async Task AddToMovieIds(UserConnection connection, int movieId)
