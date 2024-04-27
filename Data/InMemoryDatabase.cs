@@ -22,15 +22,18 @@ public class InMemoryDatabase
             return new Result().Fail("Participant limit exceeded");
         }
 
-        if (!participants.Any(p => p.Username == connection.Username))
+        if (participants.Any(p => p.Username == connection.Username))
         {
-            var participant = new Participant
-            {
-                Username = connection.Username,
-                MovieIds = []
-            };
-            participants.Add(participant);
+            return new Result().Fail($"There is already a participant with the username: {connection.Username}");
         }
+
+        var participant = new Participant
+        {
+            Username = connection.Username,
+            MovieIds = []
+        };
+
+        participants.Add(participant);
 
         return new Result().Succeded($"{connection.Username} has joined the room {connection.Room}");
     }
